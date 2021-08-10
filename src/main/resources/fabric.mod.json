@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "joinleavemessages",
+  "version": "${version}",
+  "name": "Joinleavemessages",
+  "description": "Disables Join & Leave messages within Minecraft Fabric servers",
+  "authors": [
+    "PHELMS"
+  ],
+  "contact": {
+    "website": "www.networkglitch.com",
+    "repo": "https://github.com/Phelms215/JoinLeaveMessages"
+  },
+  "license": "MIT",
+  "icon": "assets/joinleavemessages/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.networkglitch.joinleavemessages.Joinleavemessages"
+    ]
+  },
+  "mixins": [
+    "joinleavemessages.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.6",
+    "fabric": "*",
+    "minecraft": "1.17.1"
+  }
+}
