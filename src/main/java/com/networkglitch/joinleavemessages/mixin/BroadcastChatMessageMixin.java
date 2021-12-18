@@ -21,7 +21,7 @@ import java.util.UUID;
 @Mixin(PlayerManager.class)
 public class BroadcastChatMessageMixin {
 
-    @Inject(at = @At("INVOKE"), method = "broadcastChatMessage", cancellable = true)
+    @Inject(at = @At("INVOKE"), method = "broadcast", cancellable = true)
     void filterBroadCastMessages(Text message, MessageType type, UUID sender, CallbackInfo ci) {
 
         if (message instanceof TranslatableText) {
