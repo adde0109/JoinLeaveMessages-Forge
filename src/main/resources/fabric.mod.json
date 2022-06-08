@@ -12,7 +12,6 @@
     "repo": "https://github.com/Phelms215/JoinLeaveMessages"
   },
   "license": "MIT",
-  "icon": "assets/joinleavemessages/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -23,8 +22,8 @@
     "joinleavemessages.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.11.6",
+    "fabricloader": ">=0.14.6",
     "fabric": "*",
-    "minecraft": ">=1.17"
+    "minecraft": ">=1.19"
   }
 }

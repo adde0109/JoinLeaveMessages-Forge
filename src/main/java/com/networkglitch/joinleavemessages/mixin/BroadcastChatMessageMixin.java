@@ -2,16 +2,14 @@ package com.networkglitch.joinleavemessages.mixin;
 
 
 import com.networkglitch.joinleavemessages.Joinleavemessages;
-import net.minecraft.network.MessageType;
-import net.minecraft.server.MinecraftServer;
+import net.minecraft.network.message.MessageType;
 import net.minecraft.server.PlayerManager;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.TranslatableTextContent;
+import net.minecraft.util.registry.RegistryKey;
 import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.Logger;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -21,11 +19,12 @@ import java.util.UUID;
 @Mixin(PlayerManager.class)
 public class BroadcastChatMessageMixin {
 
-    @Inject(at = @At("INVOKE"), method = "broadcast", cancellable = true)
-    void filterBroadCastMessages(Text message, MessageType type, UUID sender, CallbackInfo ci) {
+    @Inject(at = @At("HEAD"), method = "broadcast(Lnet/minecraft/text/Text;Lnet/minecraft/util/registry/RegistryKey;)V", cancellable = true)
+    void filterBroadCastMessages(Text message, RegistryKey<MessageType> type, CallbackInfo ci) {
 
-        if (message instanceof TranslatableText) {
-            String Key = ((TranslatableText) message).getKey();
+        if (message instanceof MutableText MT && type == MessageType.SYSTEM) {
+            String Key = ((TranslatableTextContent) MT.getContent()).getKey();
+
             if (
                     Key.equals("multiplayer.player.joined.renamed") ||
                             Key.equals("multiplayer.player.joined") ||
