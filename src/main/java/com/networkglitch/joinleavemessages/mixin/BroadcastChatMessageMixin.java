@@ -19,21 +19,18 @@ import java.util.UUID;
 @Mixin(PlayerManager.class)
 public class BroadcastChatMessageMixin {
 
-    @Inject(at = @At("HEAD"), method = "broadcast(Lnet/minecraft/text/Text;Lnet/minecraft/util/registry/RegistryKey;)V", cancellable = true)
-    void filterBroadCastMessages(Text message, RegistryKey<MessageType> type, CallbackInfo ci) {
+    @Inject(at = @At("HEAD"), method = "broadcast(Lnet/minecraft/text/Text;Z)V", cancellable = true)
+    void filterBroadCastMessages(Text message, boolean overlay, CallbackInfo ci) {
 
-        if (message instanceof MutableText MT && type == MessageType.SYSTEM) {
-            String Key = ((TranslatableTextContent) MT.getContent()).getKey();
+        String Key = ((TranslatableTextContent) message.getContent()).getKey();
+        if (
+                Key.equals("multiplayer.player.joined.renamed") ||
+                        Key.equals("multiplayer.player.joined") ||
+                        Key.equals("multiplayer.player.left")
+        ) {
 
-            if (
-                    Key.equals("multiplayer.player.joined.renamed") ||
-                            Key.equals("multiplayer.player.joined") ||
-                            Key.equals("multiplayer.player.left")
-            ) {
-
-                Joinleavemessages.log(Level.INFO, "Suppressing a join/leave message");
-                ci.cancel();
-            }
+            Joinleavemessages.log(Level.INFO, "Suppressing a join/leave message");
+            ci.cancel();
         }
     }
 }
