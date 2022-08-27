@@ -13,7 +13,7 @@ public class Joinleavemessages implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        log(Level.INFO, "Initializing mode, registering commands");
+        log(Level.INFO, "Initializing...");
     }
 
     public static void log(Level level, String message) {
