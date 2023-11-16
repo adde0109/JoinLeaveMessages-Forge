@@ -1,0 +1,7 @@
+{
+    "pack": {
+        "description": "Joinleavemessages",
+        "pack_format": 10,
+        "_comment": "Disables Join & Leave messages within Minecraft Fabric servers"
+    }
+}
