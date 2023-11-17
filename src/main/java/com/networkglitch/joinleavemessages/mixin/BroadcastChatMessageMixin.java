@@ -17,15 +17,17 @@ public class BroadcastChatMessageMixin {
     @Inject(at = @At("HEAD"), method = "broadcastSystemMessage(Lnet/minecraft/network/chat/Component;Z)V", cancellable = true)
     void filterBroadCastMessages(Component message, boolean overlay, CallbackInfo ci) {
 
-        String Key = ((TranslatableContents) message.getContents()).getKey();
-        if (
-                Key.equals("multiplayer.player.joined.renamed") ||
-                        Key.equals("multiplayer.player.joined") ||
-                        Key.equals("multiplayer.player.left")
-        ) {
+        if(message.getContents() instanceof TranslatableContents translatableContents) {
+            String Key = translatableContents.getKey();
+            if (
+                    Key.equals("multiplayer.player.joined.renamed") ||
+                            Key.equals("multiplayer.player.joined") ||
+                            Key.equals("multiplayer.player.left")
+            ) {
 
-            //Joinleavemessages.log(Level.INFO, "Suppressing a join/leave message");
-            ci.cancel();
+                //Joinleavemessages.log(Level.INFO, "Suppressing a join/leave message");
+                ci.cancel();
+            }
         }
     }
 }
